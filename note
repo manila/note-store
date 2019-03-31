@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Manuel Nila - March 2019
+
+new_note() {
+	cat > ~/.notes/$1
+}
+
+list_notes() {
+	ls -C1 ~/.notes
+}
+
+edit_note() {
+	${EDITOR:-vi} ~/.notes/$1
+	echo "$1" > ~/.notes/.last_edited
+}
+
+edit_last_note() {
+	edit_note "$( cat ~/.notes/.last_edited )"
+}
+
+case $1 in
+	"edit") edit_note $2;;
+	"new") new_note $2;;
+	"ls") list_notes;;
+	*) edit_last_note;;
+esac
